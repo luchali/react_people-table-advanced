@@ -1,4 +1,32 @@
-export const PeopleFilters = () => {
+import React from 'react';
+import { NameFilter } from './NameFilter';
+import { URLSearchParamsInit } from 'react-router-dom';
+
+type PeopleFiltersProps = {
+  searchParams: URLSearchParams;
+  setSearchParams: (
+    nextInit: URLSearchParamsInit,
+    navigateOptions?: { replace?: boolean; state?: any },
+  ) => void;
+};
+
+export const PeopleFilters: React.FC<PeopleFiltersProps> = (
+  searchParams,
+  setSearchParams,
+) => {
+  // const century = searchParams.getAll('centuries') || [];
+
+  // const toggleCentury = (cent: string) => {
+  //   const params = new URLSearchParams(searchParams);
+
+  //   params.set('century', cent);
+  //   setSearchParams(params);
+  // };
+
+  //   const visiblePeople = useMemo(() => {
+  //   // фільтрація та сортування тут
+  // }, [people, query, centuries, ...]);
+
   return (
     <nav className="panel">
       <p className="panel-heading">Filters</p>
@@ -16,18 +44,10 @@ export const PeopleFilters = () => {
       </p>
 
       <div className="panel-block">
-        <p className="control has-icons-left">
-          <input
-            data-cy="NameFilter"
-            type="search"
-            className="input"
-            placeholder="Search"
-          />
-
-          <span className="icon is-left">
-            <i className="fas fa-search" aria-hidden="true" />
-          </span>
-        </p>
+        <NameFilter
+          searchParams={searchParams}
+          setSearchParams={setSearchParams}
+        />
       </div>
 
       <div className="panel-block">
