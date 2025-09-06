@@ -8,7 +8,7 @@ import { Person } from '../types';
 
 export const PeoplePage: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(true);
-  const [people, setPeople] = useState<Person[]>();
+  const [people, setPeople] = useState<Person[]>([]);
   const [errorMessage, setErrorMessage] = useState('');
   const { slug } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -30,6 +30,37 @@ export const PeoplePage: React.FC = () => {
         setIsLoading(false);
       });
   }, []);
+
+  const visiblePeople = React.useMemo(() => {
+    let filtered = [...people];
+
+    const name = searchParams.get('query')?.toLowerCase().trim();
+    const centuries = searchParams.getAll('centuries');
+    const sex = searchParams.get('sex');
+
+    if (name) {
+      filtered = filtered.filter(
+        person =>
+          person.name.toLowerCase().includes(name) ||
+          person.fatherName?.toLowerCase().includes(name) ||
+          person.motherName?.toLowerCase().includes(name),
+      );
+    }
+
+    if (centuries.length > 0) {
+      filtered = filtered.filter(person => {
+        const personCentury = Math.ceil(person.born / 100);
+
+        return centuries.includes(String(personCentury));
+      });
+    }
+
+    if (sex) {
+      filtered = filtered.filter(person => person.sex === sex);
+    }
+
+    return filtered;
+  }, [people, searchParams]);
 
   const peopleExist = people !== undefined && people.length !== 0;
 
@@ -60,14 +91,16 @@ export const PeoplePage: React.FC = () => {
                   There are no people on the server
                 </p>
               )}
+              {!isLoading && visiblePeople.length === 0 && (
+                <p>There are no people matching the current search criteria</p>
+              )}
 
-              <p>There are no people matching the current search criteria</p>
-
-              {peopleExist && (
+              {!isLoading && visiblePeople.length > 0 && (
                 <PeopleTable
-                  people={people}
                   selectedSlug={slug}
+                  visiblePeople={visiblePeople}
                   searchParams={searchParams}
+                  setSearchParams={setSearchParams}
                 />
               )}
             </div>

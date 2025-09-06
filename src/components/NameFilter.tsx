@@ -16,6 +16,11 @@ export const NameFilter: React.FC<NameFilterProps> = ({
 
     params.set('query', event.target.value);
     setSearchParams(params);
+
+    if (event.target.value === '') {
+      params.delete('query');
+      setSearchParams(params);
+    }
   };
 
   return (
