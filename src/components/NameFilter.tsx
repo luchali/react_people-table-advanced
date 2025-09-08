@@ -14,13 +14,20 @@ export const NameFilter: React.FC<NameFilterProps> = ({
   const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const params = new URLSearchParams(searchParams);
 
-    params.set('query', event.target.value);
-    setSearchParams(params);
+    // params.set('query', event.target.value);
+    // setSearchParams(params);
 
+    // if (event.target.value === '') {
+    //   params.delete('query');
+    //   setSearchParams(params);
+    // }
     if (event.target.value === '') {
       params.delete('query');
-      setSearchParams(params);
+    } else {
+      params.set('query', event.target.value);
     }
+
+    setSearchParams(params);
   };
 
   return (

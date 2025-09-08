@@ -23,7 +23,12 @@ export const Navbar = () => {
           </Link>
 
           <Link
-            to="people"
+            to={{
+              pathname: '/people',
+              search: location.pathname.startsWith('/people')
+                ? location.search
+                : '',
+            }}
             className={classNames('navbar-item', {
               'has-background-grey-lighter':
                 location.pathname.startsWith('/people'),

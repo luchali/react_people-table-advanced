@@ -23,6 +23,13 @@ export const CenturyFilter: React.FC<CenturyFilterProps> = ({
     setSearchParams(params);
   };
 
+  const handleClearCenturies = () => {
+    const newParams = new URLSearchParams(searchParams);
+
+    newParams.delete('centuries');
+    setSearchParams(newParams);
+  };
+
   return (
     <>
       {centuriesNums.map(cent => {
@@ -40,13 +47,13 @@ export const CenturyFilter: React.FC<CenturyFilterProps> = ({
         );
       })}
       <div className="level-right ml-4">
-        <a
+        <button
           data-cy="centuryALL"
           className="button is-success is-outlined"
-          href="#/people"
+          onClick={handleClearCenturies}
         >
           All
-        </a>
+        </button>
       </div>
     </>
   );

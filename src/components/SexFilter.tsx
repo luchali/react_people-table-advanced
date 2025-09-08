@@ -20,11 +20,11 @@ export const SexFilter: React.FC<SexFilterProps> = ({
       newParams.set('sex', sex);
     }
 
-    setSearchParams(newParams);
     if (sex === '') {
       newParams.delete('sex');
-      setSearchParams(newParams);
     }
+
+    setSearchParams(newParams);
   };
 
   return (

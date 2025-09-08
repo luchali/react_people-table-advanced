@@ -19,6 +19,7 @@ export const PeopleFilters: React.FC<PeopleFiltersProps> = ({
     resetParams.delete('query');
     resetParams.delete('centuries');
     resetParams.delete('sex');
+    resetParams.delete('sort');
 
     setSearchParams(resetParams);
   };
@@ -51,13 +52,12 @@ export const PeopleFilters: React.FC<PeopleFiltersProps> = ({
       </div>
 
       <div className="panel-block">
-        <a
+        <button
           className="button is-link is-outlined is-fullwidth"
-          href="#/people"
           onClick={handleReset}
         >
           Reset all filters
-        </a>
+        </button>
       </div>
     </nav>
   );
